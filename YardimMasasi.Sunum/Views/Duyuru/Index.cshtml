@@ -1,0 +1,124 @@
+﻿@model IEnumerable<YardimMasasi.Nesneler.DuyuruNesneler.Dto.DuyuruListeElemaniDto>
+
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+	<button type="button" style="btn btn-primary" id="newDuyuru">Yeni Kayıt</button>
+</p>
+<div class="modal" tabindex="-1" id="newDuyuruModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">
+					<h5 class="modal-title">Yeni Kayıt</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<div class="form-group">
+							<label class="control-label">Başlık</label>
+							<input id="Baslik" name="Baslik" class="form-control" />
+							<span class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Konu</label>
+							<input id="Konu" name="Konu" class="form-control" />
+							<span class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Başlangıç Tarihi</label>
+							<input id="BaslangicTarihi" name="BaslangicTarihi" class="form-control" type="datetime-local" />
+							<span class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Bitiş tarihi</label>
+							<input id="BitisTarihi" name="BitisTarihi" class="form-control" type="datetime-local" />
+							<span class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+					<button type="submit" class="btn btn-primary">Onayla</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Id)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Baslik)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Konu)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.BaslangicTarihi)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.BitisTarihi)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Id)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Baslik)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Konu)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.BaslangicTarihi)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.BitisTarihi)
+				</td>
+				<td>
+					@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+					@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+					@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@section Scripts{
+	<script type="text/javascript">
+		$(document).ready(
+			function () {
+				$("#newDuyuru").click(
+					function () {
+						openModal(document.getElementById('newDuyuruModal'));
+					}
+
+				);
+
+				$("#newDuyuruModal").find("form").submit(
+					function(e){
+						e.preventDefault();
+						submitModal(this, "/duyuru/create");
+					}
+				);
+			}
+		);
+	</script>
+}
